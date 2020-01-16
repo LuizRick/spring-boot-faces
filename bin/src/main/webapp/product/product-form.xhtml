@@ -9,7 +9,6 @@
 	<ui:define name="content">
 		<h:form id="productForm">
 			<p:panel header="Product Details">
-				<p:messages id="msgs"/>
 				<h:panelGrid columns="1">
 					<p:outputLabel for="name" value="Name: " />
 					<p:inputText id="name" value="#{productController.product.name}" validator="#{productController.validateModelText}"/>
