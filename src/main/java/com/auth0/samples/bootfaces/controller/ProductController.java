@@ -7,11 +7,12 @@ import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Scope(value = "session")
-@Component(value = "productController")
+@Controller(value = "productController")
 @ELBeanName(value = "productController")
-@Join(path = "/product", to = "/product/product-form.jsf")
 public class ProductController {
 	@Autowired
 	private ProductRepository productRepository;
@@ -21,7 +22,13 @@ public class ProductController {
 	public String save() {
 		productRepository.save(product);
 		product = new Product();
+		//return "/produtos-load.xhtml?faces-redirect=true";
 		return "/product/product-list.xhtml?faces-redirect=true";
+	}
+
+	@RequestMapping("/product")
+	public String addNewProduto(){
+		return "/product/product-form.jsf";
 	}
 
 	public Product getProduct() {

@@ -10,24 +10,32 @@ import org.ocpsoft.rewrite.faces.annotation.IgnorePostback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Scope (value = "session")
-@Component (value = "listProducts")
+@Controller(value = "listProducts")
 @ELBeanName(value = "listProducts")
-@Join(path = "/", to = "/product/product-list.jsf")
+@Join(path = "/produtos-load", to = "/product/product-list.jsf")
 public class ListProductsController {
 	@Autowired
 	private ProductRepository productRepository;
 
 	private List<Product> products;
 
-	@Deferred
 	@RequestAction
+	@Deferred
 	@IgnorePostback
 	public void loadData() {
 		products = productRepository.findAll();
+	}
+
+	@RequestMapping("/produtos-load")
+	public String listarProdutos(){
+		loadData();
+		return "/product/product-list.jsf";
 	}
 
 	public List<Product> getProducts() {
